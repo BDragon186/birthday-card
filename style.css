@@ -1,0 +1,154 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(to bottom right, #f8cdda, #a1c4fd); /* Gradient nền nhẹ nhàng */
+    font-family: 'Roboto', sans-serif;
+    overflow: hidden; /* Tránh scrollbar không cần thiết */
+}
+
+.birthday-card {
+    position: relative;
+    width: 300px; /* Kích thước thiệp */
+    height: 420px; /* Kích thước thiệp */
+    cursor: pointer;
+    transform-style: preserve-3d; /* Kích hoạt không gian 3D */
+    perspective: 1000px; /* Độ sâu phối cảnh */
+    transition: transform 0.5s ease-in-out; /* Hiệu ứng hover nhẹ */
+}
+
+.birthday-card:hover {
+    transform: scale(1.03); /* Phóng to nhẹ khi hover */
+}
+
+.card-front,
+.card-inside {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background-color: #fff;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Đảm bảo nội dung không tràn ra */
+}
+
+.card-front {
+    z-index: 2; /* Nằm trên */
+    background: linear-gradient(to bottom, #ffecd2, #fcb69f); /* Gradient mặt trước */
+    transform-origin: left; /* Bản lề bên trái */
+    transition: transform 1s ease-in-out; /* Hiệu ứng mở */
+    backface-visibility: hidden; /* Ẩn mặt sau khi xoay */
+}
+
+.front-text {
+    text-align: center;
+    padding: 20px;
+    color: #8a5a44; /* Màu chữ ấm */
+}
+
+.front-text h1 {
+    font-family: 'Pacifico', cursive; /* Font thư pháp */
+    font-size: 2.8em;
+    margin-bottom: 10px;
+    line-height: 1.2;
+}
+
+.front-text p {
+    font-size: 0.9em;
+    color: #a16e5a;
+    font-style: italic;
+}
+
+/* Bong bóng trang trí mặt trước */
+.balloons {
+    position: absolute;
+    bottom: 10px;
+    right: 15px;
+    display: flex;
+}
+
+.balloon {
+    width: 25px;
+    height: 35px;
+    border-radius: 50%;
+    margin-left: -10px; /* Chồng lên nhau chút */
+    opacity: 0.8;
+    position: relative; /* Để tạo dây */
+    animation: float 3s ease-in-out infinite alternate; /* Hiệu ứng bay nhẹ */
+}
+
+.balloon::after { /* Dây bóng bay */
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1px;
+    height: 20px;
+    background-color: #555;
+}
+
+.b1 { background-color: #ef476f; animation-delay: 0.5s; }
+.b2 { background-color: #ffd166; animation-delay: 0s; }
+.b3 { background-color: #06d6a0; animation-delay: 1s; }
+
+@keyframes float {
+    0% { transform: translateY(0) rotate(0deg); }
+    100% { transform: translateY(-10px) rotate(5deg); }
+}
+
+
+.card-inside {
+    z-index: 1; /* Nằm dưới */
+    background-color: #fff8f0; /* Màu nền bên trong ấm áp */
+    padding: 30px;
+    box-sizing: border-box; /* Padding không làm tăng kích thước */
+    text-align: center;
+    transform: rotateY(0deg); /* Ban đầu không xoay */
+    backface-visibility: hidden; /* Ẩn khi bị che */
+}
+
+.inside-text h2 {
+    font-family: 'Pacifico', cursive;
+    color: #d9534f; /* Màu tiêu đề nổi bật */
+    font-size: 1.8em;
+    margin-bottom: 15px;
+}
+
+.inside-text p {
+    font-size: 0.95em;
+    line-height: 1.6;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.inside-text .signature {
+    text-align: right;
+    font-style: italic;
+    margin-top: 30px;
+    color: #777;
+}
+
+.cake-img {
+    max-width: 80px; /* Kích thước ảnh bánh */
+    margin-top: 15px;
+    opacity: 0; /* Ẩn ban đầu */
+    transition: opacity 0.5s 0.8s ease-in; /* Xuất hiện sau khi mở, có delay */
+}
+
+
+/* Lớp 'open' được thêm bằng JS để kích hoạt hiệu ứng */
+.birthday-card.open .card-front {
+    transform: rotateY(-180deg); /* Xoay mặt trước đi */
+}
+
+.birthday-card.open .cake-img {
+    opacity: 1; /* Hiện ảnh bánh khi mở */
+}
